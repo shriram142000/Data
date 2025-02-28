@@ -1,0 +1,355 @@
+
+Search
+Write
+Sign up
+
+Sign in
+
+
+
+Challenges of LLM for Large Document Summarization : Exploring different LangChain approaches using Google Cloud Vertex AI PaLM2 API
+Discovering Different LangChain Approaches for Large Document Summarization with Google Cloud Vertex AI PaLM API
+Anirban Chakraborty
+Google Cloud - Community
+Anirban Chakraborty
+
+·
+Follow
+
+Published in
+Google Cloud - Community
+
+·
+4 min read
+·
+Oct 30, 2023
+146
+
+
+2
+
+
+
+
+LangChain ‘MapReduce’ method for large document summarization using LLM
+Background:
+Text summarization is the process of making short, informative summaries of longer texts while keeping the most important details. Large Language Models (LLMs) are used for summarizing various types of text, like news articles, technical documents, contracts or research papers.
+
+Although summarizing a short paragraph is a trivial task, summarizing large documents such as a PDF file with multiple pages can be challenging. In this blog, we will go through a few examples of how we can use generative models along with LangChain strategies to summarize large documents.
+
+For flexible interactions with LLMs and effective summarization of lengthy documents, utilizing pre-built methods or libraries like LangChain is highly advantageous, especially when they integrate seamlessly with Vertex AI.
+
+Objective
+In this blog, we will use LangChain, a framework for developing LLM applications, to apply some summarization strategies like below.
+
+- Stuffing method
+- MapReduce method
+- Refine method
+
+Tools and technology used while writing the blog:
+
+- Google Cloud Vertex AI PaLM2 API model text-bison which is optimized for performing natural language tasks, such as classification, summarization, extraction, content creation etc.
+
+- LangChain chain modules for documents
+
+Staffing Method:
+
+LangChain ‘Staffing’ method for large document summarization using LLM
+Stuffing is the most straightforward technique for feeding data to a language model. It involves inserting text into the prompt as context, ensuring that the model can process all the necessary information for summarization.
+
+With the stuff method, we can summarize the entire document content with a single API call passing all data at once. Depending on the context length of LLM, the stuff method would not work as it result in a prompt larger than the context length.
+
+400 The request cannot be processed. The most likely reason is that the provided input exceeded the model's input token limit.
+Thus, here are the pros and cons of using the stuffing method:
+
+Pros:
+Only a single call is required to the model.
+The model can access the entire dataset simultaneously when generating a text summary, potentially leading to enhanced summary results.
+Cons:
+Many models come with a predefined context limit; for instance, text-bison has a maximum input token restriction of 4K. When dealing with large documents , the stuffing technique will not be viable, as it would produce prompts exceeding the context length.
+In summary, The stuffing method is typically more effective when applied to smaller data segments and is less suitable for handling large documents.
+
+In the following section, we will explore approaches which designed to help deal with having longer text than context length limit of LLMs.
+
+MapReduce Method:
+
+LangChain ‘MapReduce’ method for large document summarization using LLM
+The `MapReduce` approach is a multi-stage summarization technique. It involves summarizing larger texts by first summarizing smaller sections and then merging those summaries into one cohesive summary. By using the MapReduce method, the model can summarize extensive documents while circumventing the context limitations of the Stuffing method through parallel processing. However, the MapReduce requires multiple calls to the model and potentially losing context between pages.
+
+This method is somewhat more intricate than the initial approach, but it proves to be more effective, especially with large datasets. In this context, we’ll create two prompt templates: one for the initial summarization step and another for the final consolidation step.
+
+Pros:
+Capable of summarizing a large document
+Compatible with efficient parallel processing, as the summarization processes for different pages operate independently.
+Cons:
+Multiple calls to the model is needed
+Since pages are summarized separately, there is a potential for context loss between them
+Refine Method:
+
+LangChain ‘Refine’ method for large document summarization using LLM
+The Refine method offers an alternative approach to handle the summarization of large documents. It begins with an initial prompt applied to a small portion of the data, generating an initial output. Then, as each subsequent document is processed, the output from the prior document is incorporated alongside the new document. The LLM is tasked with refining the output based on the additional content from the new document. This approach ensures a comprehensive and accurate summary, as it considers the context of the previous page.
+
+Here are the pros and cons of using such method:
+
+Pros:
+Capable of summarizing a large document
+Since the sequential pages are summarized with the context from the preceding pages, the continuity of context between the pages is maintained.
+Cons:
+Multiple calls to the model is needed
+Does not work well with parallel processing as the processes to summarize pages are dependent to each other
+Conclusion
+We’ve achieved the successful summarization of a lengthy document, overcoming the initial input prompt limit. Furthermore, we’ve acquired insights into various techniques for summarizing extended documents, each with its own set of advantages and drawbacks.
+
+As a next step, for a given large document, comparing the text-bison model output with OpenAI or other pre-trained models would be an interesting exercise to understand which model performs best.
+
+And perhaps cost :-)
+
+Vertex AI
+Google Cloud Platform
+Langchain
+Generative Ai
+Machine Learning
+146
+
+
+2
+
+
+Google Cloud - Community
+Published in Google Cloud - Community
+61K Followers
+·
+Last published 14 hours ago
+A collection of technical articles and blogs published or curated by Google Cloud Developer Advocates. The views expressed are those of the authors and don't necessarily reflect those of Google.
+
+Follow
+Anirban Chakraborty
+Written by Anirban Chakraborty
+91 Followers
+·
+51 Following
+Cloud Architect, Engineering Lead
+
+Follow
+Responses (2)
+
+Write a response
+
+What are your thoughts?
+
+Cancel
+Respond
+
+Also publish to my profile
+
+Aayush Pagare
+Aayush Pagare
+
+Dec 4, 2024
+
+
+Thanks!! That was exactly I was looking for.
+1
+
+Reply
+
+Mo Alraddadi
+Mo Alraddadi
+
+Jan 5, 2024
+
+
+Would you consider RAG as a method for summarizing documents?
+
+1 reply
+
+Reply
+
+More from Anirban Chakraborty and Google Cloud - Community
+A Step by Step approach to setup AWS PrivateLink for Amazon RDS across VPCs
+Anirban Chakraborty
+Anirban Chakraborty
+
+A Step by Step approach to setup AWS PrivateLink for Amazon RDS across VPCs
+Enhancing Security & Connectivity: A Definitive Guide to Configuring AWS PrivateLink for Seamless Amazon RDS Access Across VPCs
+Aug 9, 2023
+23
+2
+Building ReAct Agents from Scratch: A Hands-On Guide using Gemini
+Google Cloud - Community
+In
+
+Google Cloud - Community
+
+by
+
+Arun Shankar
+
+Building ReAct Agents from Scratch: A Hands-On Guide using Gemini
+tldr: ReAct (Reason + Act) is a powerful framework for building AI agents that seamlessly integrates reasoning and decision-making with…
+Oct 12, 2024
+456
+8
+Kubernetes NodePort vs LoadBalancer vs Ingress? When should I use what?
+Google Cloud - Community
+In
+
+Google Cloud - Community
+
+by
+
+Sandeep Dinesh
+
+Kubernetes NodePort vs LoadBalancer vs Ingress? When should I use what?
+Recently, someone asked me what the difference between NodePorts, LoadBalancers, and Ingress were. They are all different ways to get…
+Mar 12, 2018
+17.4K
+72
+Revolutionizing Code Reviews using Generative AI: A practical approach using Google Cloud Vertex AI…
+Google Cloud - Community
+In
+
+Google Cloud - Community
+
+by
+
+Anirban Chakraborty
+
+Revolutionizing Code Reviews using Generative AI: A practical approach using Google Cloud Vertex AI…
+Unlocking the Potential of AI-Assisted Code Reviews with Google Cloud Vertex AI
+Jan 29, 2024
+36
+1
+See all from Anirban Chakraborty
+See all from Google Cloud - Community
+Recommended from Medium
+The Best Practices of RAG
+Towards AI
+In
+
+Towards AI
+
+by
+
+Florian June
+
+The Best Practices of RAG
+Typical RAG Process, Best Practices for Each Module, and Comprehensive Evaluation
+
+Aug 9, 2024
+1K
+10
+Tabular Data, RAG, & LLMs: Improve Results Through Data Table Prompting
+Intel Tech
+In
+
+Intel Tech
+
+by
+
+Intel
+
+Tabular Data, RAG, & LLMs: Improve Results Through Data Table Prompting
+How to ingest small tabular data when working with LLMs.
+May 14, 2024
+546
+6
+Lists
+
+
+
+Predictive Modeling w/ Python
+20 stories
+·
+1842 saves
+Principal Component Analysis for ML
+Time Series Analysis
+deep learning cheatsheet for beginner
+Practical Guides to Machine Learning
+10 stories
+·
+2215 saves
+
+
+
+Natural Language Processing
+1958 stories
+·
+1605 saves
+Image by vectorjuice on FreePik
+
+
+The New Chatbots: ChatGPT, Bard, and Beyond
+12 stories
+·
+560 saves
+Create a RAG Agent with LangGraph to Extract the information from a PDF File
+Ferry Djaja
+Ferry Djaja
+
+Create a RAG Agent with LangGraph to Extract the information from a PDF File
+In this blog, we will build a simple agent to extract the information from a PDF file with LangGraph. We will be using GPT-4o to extract…
+
+Sep 23, 2024
+166
+1
+How to Build a RAG System with a Self-Querying Retriever in LangChain
+TDS Archive
+In
+
+TDS Archive
+
+by
+
+Ed Izaguirre
+
+How to Build a RAG System with a Self-Querying Retriever in LangChain
+RAG + Filtering with Metadata = Great Movie Recommendations 🍿
+Apr 25, 2024
+498
+8
+Building AI-Powered Chatbots with Gemini, LangChain, and RAG on Google Vertex AI
+Towards AI
+In
+
+Towards AI
+
+by
+
+Shenggang Li
+
+Building AI-Powered Chatbots with Gemini, LangChain, and RAG on Google Vertex AI
+A Step-by-Step Guide to Configuring Google Vertex AI, Leveraging the Gemini API, and Integrating Knowledge Bases for Intelligent…
+
+Feb 20
+57
+Advanced RAG 06: Exploring Query Rewriting
+Florian June
+Florian June
+
+Advanced RAG 06: Exploring Query Rewriting
+A key technique for aligning the semantics of queries and documents
+
+Mar 4, 2024
+1.1K
+6
+See more recommendations
+Help
+
+Status
+
+About
+
+Careers
+
+Press
+
+Blog
+
+Privacy
+
+Terms
+
+Text to speech
+
+Teams
