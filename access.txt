@@ -1,0 +1,7 @@
+
+ID	FirstName	LastName	Email	PhoneNumber	AccessLevel
+1	John	Doe	john.doe@example.com	123-456-7890	Admin
+2	Jane	Smith	jane.smith@example.com	234-567-8901	User
+3	Alice	Johnson	alice.johnson@example.com	345-678-9012	User
+4	Bob	Brown	bob.brown@example.com	456-789-0123	Guest
+5	Carol	Davis	carol.davis@example.com	567-890-1234	Admin
